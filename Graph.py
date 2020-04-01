@@ -1,3 +1,6 @@
+from Vertice import Vertice
+from Edge import Edge
+
 class Graph:
     # Receive nothing
     def __init__(self):
@@ -8,15 +11,6 @@ class Graph:
     def add_vertice(self, identifier):
         self.list_vertices.append(Vertice(identifier))
 
-    # Receive two integers
-    def add_edge(self, origin, destination, cost):
-        vert_origin = find_vertice(origin)
-        vert_destination = find_vertice(destination)
-        
-        if (vert_origin is not None) and (vert_destination is not None):
-            self.list_edges.append(Edge(vert_origin, vert_destination, cost))
-        else:
-            print("add_edge: one or both vertices are not valid")
         
     # Receive an integer
     def find_vertice(self, Id):
@@ -27,9 +21,19 @@ class Graph:
             return None
         
     # Receive two integers
+    def add_edge(self, origin, destination, cost):
+        vert_origin = self.find_vertice(origin)
+        vert_destination = self.find_vertice(destination)
+        
+        if (vert_origin is not None) and (vert_destination is not None):
+            self.list_edges.append(Edge(vert_origin, vert_destination, cost))
+        else:
+            print("add_edge: one or both vertices are not valid")
+
+    # Receive two integers
     def find_edge(self, origin, destination):
-        vert_origin = find_vertice(origin)
-        vert_destination = find_vertice(destination)
+        vert_origin = self.find_vertice(origin)
+        vert_destination = self.find_vertice(destination)
     
         for edg in self.list_edges:
             _origin = edg.getOrigin()
@@ -70,9 +74,9 @@ class Graph:
         
         v = self.adjacent_Search(vert)  # return only not visited or null        
         while v is not None:
-            v.predecessor.append(u.getId())
+            v.predecessor.append(vert.getId())
             self.visit(v)
-            v = self.adjacent_Search(u)
+            v = self.adjacent_Search(vert)
     
     
     
